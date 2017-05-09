@@ -40,6 +40,13 @@
 		width: 150px;
 		height: 150px;
 	}
+	.jumbotron h1 {
+   		 font-size: 55px;
+   	}
+	.jumbotron h1 img{
+		width: 230px;
+		height: 150px;
+	}
 </style>
 <script type="text/javascript">
     
@@ -83,7 +90,8 @@
 	<div class="container">
 
 		<div class="jumbotron">
-			<h1>Hadoop MapReduce trên DBLP</h1>
+			<h1>Hadoop MapReduce trên DBLP <img src="bootstrap/image/HadoopMapReduce.png"/></h1>
+			
 		</div>
 		<div class="row">
 			<div class="col-md-12">

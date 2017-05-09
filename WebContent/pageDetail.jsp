@@ -51,7 +51,7 @@
 	<!-- Page Content -->
 	<div class="container">
 		<div class="jumbotron" style="text-align: center;">
-			<h2><%=object.get("title")%></h2>
+			<h2 style="color: blue;"><%=object.get("title")%></h2>
 		</div>
 		<div class="row">
 			<div class="col-md-12"">
