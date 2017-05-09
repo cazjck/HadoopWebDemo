@@ -43,7 +43,7 @@ public class index extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String search = request.getParameter("search");
+		String search = request.getParameter("search").trim();
 		int tieuChiTimKiem = Integer.parseInt(request.getParameter("radTieuchitimkiem"));
 		String type = request.getParameter("loaibaibao");
 		ArrayList<Page> arrayList=new ArrayList<>();

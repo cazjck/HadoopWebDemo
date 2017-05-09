@@ -19,7 +19,8 @@ public class DBLPDriver  {
 	//	runHadoop("Luc","All",0);
 	}
 	public static boolean runHadoopLocal(String search,String type, int tieuChi) throws Exception {
-		String outputPath=outputHadoopLocal+"/"+search.trim()+"_"+type+"_"+tieuChi+"/";
+		//String outputPath=outputHadoopLocal+"/"+search.trim()+"_"+type+"_"+tieuChi+"/";
+		String outputPath=outputHadoopLocal+"/"+search.replaceAll("\\s+", " ")+"_"+type+"_"+tieuChi+"/";
 		Configuration conf = new Configuration();
 		conf.set("searchWord",search);
 		conf.set("type",type.trim());
@@ -44,7 +45,8 @@ public class DBLPDriver  {
 	
 	public static boolean runHadoopCluster(String jarPath,String search,String type, int tieuChi) throws Exception {
 		//outputHadoopCluster =outputHadoopCluster+"/"+search.trim()+"_"+type+"_"+tieuChi+"/";
-		String outputPath=outputHadoopCluster+"/"+search.trim()+"_"+type+"_"+tieuChi+"/";
+		//String outputPath=outputHadoopCluster+"/"+search.trim()+"_"+type+"_"+tieuChi+"/";
+		String outputPath=outputHadoopCluster+"/"+search.replaceAll("\\s+", " ")+"_"+type+"_"+tieuChi+"/";
 		Configuration conf=HadoopCluster.getConf();
 		conf.set("searchWord",search);
 		conf.set("type",type.trim());

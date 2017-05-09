@@ -47,7 +47,8 @@ public class HadoopCluster {
 	// Kiểm tra file trong Hadoop Cluster
 	public static ArrayList<Page> checkResultHadoopCluster(String jarPath,String search, String type, int tieuChi) throws Exception {
 		FileSystem fs = FileSystem.get(HadoopCluster.getConf());
-		String outputPath=DBLPDriver.outputHadoopCluster+"/"+search.trim()+"_"+type+"_"+tieuChi;
+		//String outputPath=DBLPDriver.outputHadoopCluster+"/"+search.trim()+"_"+type+"_"+tieuChi;
+		String outputPath=DBLPDriver.outputHadoopCluster+"/"+search.replaceAll("\\s+", "")+"_"+type+"_"+tieuChi+"/";
 		System.out.println("--------outputPath--------------"+outputPath);
 		Path path = new Path(outputPath);
 		if (fs.exists(path)) {
@@ -68,7 +69,7 @@ public class HadoopCluster {
 
 	// Lấy dữ liệu từ Hadoop Cluster
 	public static ArrayList<Page> getDataHadoopCluster(String pathName) throws Exception {
-		System.out.println(pathName+"/part-r-00000");
+		System.out.println(pathName+"part-r-00000");
 		FutureTask<ArrayList<Page>> futureTask = new FutureTask<>(new ReadFileHadoopClusterCallable(pathName+"/part-r-00000"));
 		futureTask.run();
 		return futureTask.get();
