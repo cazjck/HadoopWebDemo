@@ -19,16 +19,13 @@ public class DBLPDriver  {
 	//	runHadoop("Luc","All",0);
 	}
 	public static boolean runHadoopLocal(String search,String type, int tieuChi) throws Exception {
-		//outputHadoopLocal += "/"+search.trim()+"_"+type+"_"+tieuChi+"/";
 		String outputPath=outputHadoopLocal+"/"+search.trim()+"_"+type+"_"+tieuChi+"/";
-
 		Configuration conf = new Configuration();
 		conf.set("searchWord",search);
 		conf.set("type",type.trim());
 		conf.setInt("tieuChiTimKiem", tieuChi);
 		Job job = Job.getInstance(conf, "Application_"+search);
 		job.setJarByClass(DBLPDriver.class); // run in localhost
-		// job.setJar("jar/MapReduceDriver.jar");// run in Hadoop cluster
 		job.setCombinerClass(DBLPReducer.class);
 		job.setMapperClass(DBLPMapper.class);
 		job.setReducerClass(DBLPReducer.class);
@@ -53,9 +50,6 @@ public class DBLPDriver  {
 		conf.set("type",type.trim());
 		conf.setInt("tieuChiTimKiem", tieuChi);
 		Job job = Job.getInstance(conf, "Application_"+search.trim()+"_"+type+"_"+tieuChi);
-		
-		//job.setJarByClass(DBLPDriver.class); // run in localhost
-	
 		//job.setJar("./HadoopWebDemo/jars/MapReduceDriver.jar");// run in Hadoop cluster
 		job.setJar(jarPath);// run in Hadoop cluster
 		job.addFileToClassPath(new Path("hdfs://namenode:9000/jar/json-20160810.jar"));
