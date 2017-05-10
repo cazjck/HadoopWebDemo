@@ -47,7 +47,7 @@ public class DBLPDriver  {
 		conf.setInt("tieuChiTimKiem", tieuChi);
 		Job job = Job.getInstance(conf, "Application_"+search.trim()+"_"+type+"_"+tieuChi);
 		job.setJar(jarPath+ "jars/MapReduceDriver.jar");// run in Hadoop cluster
-		job.addFileToClassPath(new Path(jarPath+"jars/json-20160810.jar"));
+		job.addFileToClassPath(new Path("hdfs://namenode:9000/jar/json-20160810.jar")); // Thêm jar từ HDFS. Do bản thân Hadoop Cluster chưa có file Jar Json
 		job.setCombinerClass(DBLPReducer.class);
 		job.setMapperClass(DBLPMapper.class);
 		job.setReducerClass(DBLPReducer.class);
