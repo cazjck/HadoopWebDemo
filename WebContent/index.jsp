@@ -63,15 +63,24 @@
     	var y=$(window).height() / 2 - 200;
     	$('.loading-icon').css({"left":x, "top":y});
     	$(document).not("loading-icon").click(function(){ return; });
-    	$('.loading').show();
+    	if (validateForm()==true) { // Kiểm tra dữ liệu
+    		$('.loading').show();
+    		$("#formHadoopID").submit(); // Bắt đầu submit form
+		}
+    
     }
     
     
     function validateForm(){
-    	if(document.formHadoop.search.value=="") { 
+    	if($('#search').val()=="") { 
     		alert("Từ khóa không để trống"); 
-    		document.formHadoop.search.focus();
-    		return false; }
+    		$('#search').focus(); // Bắt đầu submit form
+    		return false; 
+    	}
+    	else  {
+    		return true;
+		}
+    	
     }
     
     </script>
@@ -96,11 +105,10 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline" role="form">
-					<form role="form" name="formHadoop" action="index" method="POST"
-						onsubmit="return validateForm()">
+					<form role="form" id="formHadoopID" name="formHadoop" action="index" method="POST">
 						<div class="col-md-3">
 							<label>Từ khóa:</label> <input class="inputForm" type="text"
-								name="search" placeholder="Nhập tên tác giả">
+								name="search" id="search" placeholder="Nhập tên tác giả"">
 						</div>
 						<div class="col-md-4">
 							<label>Tiêu chí tìm kiếm:</label>
@@ -129,7 +137,7 @@
 							</select>
 						</div>
 						<div class="col-md-2">
-							<button type="submit" onclick="loadingHadoop()" class="btn btn-primary">Tìm kiếm</button>
+							<button name="search" type="button" onclick="loadingHadoop()" class="btn btn-primary">Tìm kiếm</button>
 						</div>
 					</form>
 			</div>
