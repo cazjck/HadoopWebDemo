@@ -46,10 +46,8 @@ public class DBLPDriver  {
 		conf.set("type",type.trim());
 		conf.setInt("tieuChiTimKiem", tieuChi);
 		Job job = Job.getInstance(conf, "Application_"+search.trim()+"_"+type+"_"+tieuChi);
-		//job.setJar("./HadoopWebDemo/jars/MapReduceDriver.jar");// run in Hadoop cluster
-		job.setJar(jarPath);// run in Hadoop cluster
-		job.addFileToClassPath(new Path("hdfs://namenode:9000/jar/json-20160810.jar"));
-		//job.addCacheArchive(new URI("J:/HK1 year 4/Do an 2 Big Data/Source code/HadoopWebDemo/jar/json-20160810.jar"));
+		job.setJar(jarPath+ "jars/MapReduceDriver.jar");// run in Hadoop cluster
+		job.addFileToClassPath(new Path(jarPath+"jars/json-20160810.jar"));
 		job.setCombinerClass(DBLPReducer.class);
 		job.setMapperClass(DBLPMapper.class);
 		job.setReducerClass(DBLPReducer.class);

@@ -49,7 +49,7 @@ public class index extends HttpServlet {
 		HttpSession sess = request.getSession(true);
 		try {
 			// Khi chạy trên Hadoop Cluster cần có file jar được export từ code
-			String jarPath = getServletContext().getRealPath("/") + "jars/MapReduceDriver.jar";
+			String jarPath = getServletContext().getRealPath("/");
 			arrayList = HadoopCluster.checkResultHadoopCluster(jarPath, search, type, tieuChiTimKiem);
 			if (arrayList != null && arrayList.size() > 1) {
 				// System.out.println("Có dữ liệu");
