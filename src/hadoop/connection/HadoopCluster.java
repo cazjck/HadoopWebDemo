@@ -3,24 +3,18 @@ package hadoop.connection;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.FutureTask;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.mapreduce.MRConfig;
 import org.apache.hadoop.yarn.conf.YarnConfiguration;
-
-import com.google.common.io.Files;
-
 import hadoop.dblp.model.Page;
 import hadoop.mapreduce.DBLPDriver;
 
 public class HadoopCluster {
 	private static Configuration conf = null;
-
 	private static final String YARN_RESOURCE = "namenode:8032";
 	private static final String DEFAULT_FS = "hdfs://namenode:9000";
-	private static final String OUTPUT="hdfs://namenode:9000/output";
 
 	public static Configuration getConf() {
 		if (conf == null) {
@@ -35,19 +29,9 @@ public class HadoopCluster {
 		return conf;
 	}
 
-	// Xóa file trong Hadoop Cluster
-	public static void deleteFolder(Configuration conf, String folderPath) throws Exception {
-		FileSystem fs = FileSystem.get(conf);
-		Path path = new Path(folderPath);
-		if (fs.exists(path)) {
-			fs.delete(path, true);
-		}
-	}
-
 	// Kiểm tra file trong Hadoop Cluster
 	public static ArrayList<Page> checkResultHadoopCluster(String jarPath,String search, String type, int tieuChi) throws Exception {
 		FileSystem fs = FileSystem.get(HadoopCluster.getConf());
-		//String outputPath=DBLPDriver.outputHadoopCluster+"/"+search.trim()+"_"+type+"_"+tieuChi;
 		String outputPath=DBLPDriver.outputHadoopCluster+"/"+search.replaceAll("\\s+", "")+"_"+type+"_"+tieuChi+"/";
 		System.out.println("--------outputPath--------------"+outputPath);
 		Path path = new Path(outputPath);
@@ -59,7 +43,19 @@ public class HadoopCluster {
 		}
 	}
 	
-
+	// Kiểm tra file trong Hadoop Local
+	public static ArrayList<Page> checkResultHadoopLocal(String jarPath,String search, String type, int tieuChi) throws Exception {
+		String outputPath=DBLPDriver.outputHadoopCluster+"/"+search.replaceAll("\\s+", "")+"_"+type+"_"+tieuChi+"/";
+		File file=new File(outputPath);
+		System.out.println("--------outputPath--------------"+outputPath);
+		if (file.exists()) {
+			System.out.println("Tìm thấy kết quả với từ khóa: "+search);
+			return getDataHadoopLocal(outputPath);
+		} else {
+			return runHadoopLocal(search, type, tieuChi,outputPath);
+		}
+	}
+	
 	// Lấy dữ liệu từ localhost
 	public static ArrayList<Page> getDataHadoopLocal(String pathName) throws Exception {
 		FutureTask<ArrayList<Page>> futureTask = new FutureTask<>(new ReadFileHadoopLocalCallable(pathName+"/part-r-00000"));
@@ -94,6 +90,22 @@ public class HadoopCluster {
 		}
 		else {
 			return null;
+		}
+	}
+	// Xóa file trong Hadoop Cluster
+	public static void deleteFolderHadoopCluster(Configuration conf, String folderPath) throws Exception {
+		FileSystem fs = FileSystem.get(conf);
+		Path path = new Path(folderPath);
+		if (fs.exists(path)) {
+			fs.delete(path, true);
+		}
+	}
+	
+	// Xóa file trong Hadoop Local
+	public static void deleteFolderHadoopLocal(String folderPath) throws Exception {
+		File file=new File(folderPath);
+		if (file.exists()) {
+			file.delete();
 		}
 	}
 

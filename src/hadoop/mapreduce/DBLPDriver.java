@@ -1,7 +1,6 @@
 package hadoop.mapreduce;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -12,15 +11,15 @@ import hadoop.connection.HadoopCluster;
 
 public class DBLPDriver  {
 	private static final String inputHadoopLocal = "D:/DBLP.json";
-	public static final String outputHadoopLocal = "../output";
+	public static final String outputHadoopLocal = "/output";
 	private static final String inputHadoopCluster = "hdfs://namenode:9000/input/DBLP.json";
 	public static final  String outputHadoopCluster = "hdfs://namenode:9000/output";
 	public static void main(String[] args) throws Exception {
-	//	runHadoop("Luc","All",0);
+		// Test với chế độ Localhost
+		//	runHadoopLocal("Luc","All",0);
 	}
 	public static boolean runHadoopLocal(String search,String type, int tieuChi) throws Exception {
-		//String outputPath=outputHadoopLocal+"/"+search.trim()+"_"+type+"_"+tieuChi+"/";
-		String outputPath=outputHadoopLocal+"/"+search.replaceAll("\\s+", " ")+"_"+type+"_"+tieuChi+"/";
+		String outputPath=outputHadoopLocal+"/"+search.replaceAll("\\s+","")+"_"+type+"_"+tieuChi+"/";
 		Configuration conf = new Configuration();
 		conf.set("searchWord",search);
 		conf.set("type",type.trim());
@@ -33,9 +32,7 @@ public class DBLPDriver  {
 		// Trong trường hợp Map và Reduce khác dữ liệu
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);
-		//System.out.println(outputLocal);
-		deleteFolder(conf,outputPath);
-		// HadoopCluster.deleteFolder(conf, output);
+		//HadoopCluster.deleteFolderHadoopLocal(outputPath);
 		FileInputFormat.addInputPath(job, new Path(inputHadoopLocal));
 		FileOutputFormat.setOutputPath(job, new Path(outputPath));
 
@@ -44,8 +41,6 @@ public class DBLPDriver  {
 	
 	
 	public static boolean runHadoopCluster(String jarPath,String search,String type, int tieuChi) throws Exception {
-		//outputHadoopCluster =outputHadoopCluster+"/"+search.trim()+"_"+type+"_"+tieuChi+"/";
-		//String outputPath=outputHadoopCluster+"/"+search.trim()+"_"+type+"_"+tieuChi+"/";
 		String outputPath=outputHadoopCluster+"/"+search.replaceAll("\\s+","")+"_"+type+"_"+tieuChi+"/";
 		Configuration conf=HadoopCluster.getConf();
 		conf.set("searchWord",search);
@@ -62,19 +57,10 @@ public class DBLPDriver  {
 		// Trong trường hợp Map và Reduce khác dữ liệu
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);
-		//System.out.println(outputHadoopCluster);
-		deleteFolder(conf,outputPath);
-		// HadoopCluster.deleteFolder(conf, output);
+		//HadoopCluster.deleteFolderHadoopCluster(conf, outputPath);
 		FileInputFormat.addInputPath(job, new Path(inputHadoopCluster));
 		FileOutputFormat.setOutputPath(job, new Path(outputPath));
 
 		return job.waitForCompletion(true) ? true : false;
-	}
-	public static void deleteFolder(Configuration conf, String folderPath) throws Exception {
-		FileSystem fs = FileSystem.get(conf);
-		Path path = new Path(folderPath);
-		if (fs.exists(path)) {
-			fs.delete(path, true);
-		}
 	}
 }
