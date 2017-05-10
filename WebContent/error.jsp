@@ -15,7 +15,7 @@
 
 <!-- Custom CSS -->
 <link href="bootstrap/css/shop-item.css" rel="stylesheet">
-<title>Insert title here</title>
+<title>Lỗi không có dữ liệu trang Web</title>
 </head>
 
 <body>
@@ -27,20 +27,12 @@
 		<div class="jumbotron" style="text-align: center;">
 			<h2>Bài viết này không bao gồm link dẫn đến trang Web</h2>
 		</div>
-		<div class="row">
-			<div class="col-md-12"">
-				
-			</div>
-			
-
-
+	</div>		
 			<!-- /.container -->
 
 			<div class="container">
 				<!-- Footer -->
-				<div style="margin: auto;">Copyright &copy; Hadoop Cluster
-					Demo</div>
-
+				<div style="margin: auto;">Copyright &copy; Hadoop ClusterDemo</div>
 
 			</div>
 

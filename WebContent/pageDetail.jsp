@@ -54,7 +54,7 @@
 			<h2 style="color: blue;"><%=object.get("title")%></h2>
 		</div>
 		<div class="row">
-			<div class="col-md-12"">
+			<div class="col-md-12">
 				<div style="width: 70%;margin: auto;">
 				
 				<%
@@ -174,18 +174,15 @@
 			<%
 				}
 			%>
-
-
+		</div>
 			<!-- /.container -->
 
 			<div class="container">
 				<!-- Footer -->
 				<div style="margin: auto;">Copyright &copy; Hadoop Cluster
 					Demo</div>
-
-
 			</div>
-
+	</div>
 			<!-- /.container -->
 
 			<!-- jQuery -->

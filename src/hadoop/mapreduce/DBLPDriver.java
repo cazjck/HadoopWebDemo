@@ -8,7 +8,6 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import hadoop.connection.HadoopCluster;
-
 public class DBLPDriver  {
 	private static final String inputHadoopLocal = "D:/DBLP.json";
 	public static final String outputHadoopLocal = "/output";
