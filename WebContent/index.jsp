@@ -15,7 +15,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Hadoop MapReduce trên DBLP(Digital Bibliography & Library Project)</title>
+<title>Hadoop MapReduce trên DBLP(Digital Bibliography & Library
+	Project)</title>
 
 <!-- Bootstrap Core CSS -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -23,30 +24,75 @@
 <!-- Custom CSS -->
 <link href="bootstrap/css/shop-item.css" rel="stylesheet">
 <style>
-	.loading{
-		display: none; 	
-		position: absolute;
-		width:100%;
-		height:100%;
-		
-		z-index: 1000; 
+.loading {
+	display: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+}
+
+.loading-icon {
+	position: absolute;
+}
+
+.loading-icon img {
+	margin-left: 60px;
+	width: 150px;
+	height: 150px;
+}
+
+.jumbotron {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	margin-bottom: 30px;
+	color: inherit;
+	background-color: #eee;
+}
+
+.jumbotron h1, .jumbotron .h1 {
+	color: inherit;
+}
+
+.jumbotron p {
+	margin-bottom: 15px;
+	font-size: 21px;
+	font-weight: 200;
+}
+
+.jumbotron>hr {
+	border-top-color: #d5d5d5;
+}
+
+.container .jumbotron, .container-fluid .jumbotron {
+	padding-right: 15px;
+	padding-left: 15px;
+	border-radius: 6px;
+}
+
+.jumbotron .container {
+	max-width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+	.jumbotron {
+		padding-top: 30px;
+		padding-bottom: 30px;
 	}
-	.loading-icon{
-		position: absolute;
-		
+	.container .jumbotron, .container-fluid .jumbotron {
+		padding-right: 50px;
+		padding-left: 50px;
 	}
-	.loading-icon img{
-		margin-left:60px;
-		width: 150px;
-		height: 150px;
-	}
-	.jumbotron h1 {
-   		 font-size: 55px;
-   	}
-	.jumbotron h1 img{
-		width: 230px;
-		height: 150px;
-	}
+}
+
+.jumbotron h1 {
+	font-size: 45px;
+}
+
+.jumbotron h1 img {
+	width: 350px;
+	height: 110px;
+}
 </style>
 <script type="text/javascript">
     
@@ -90,22 +136,26 @@
 <body>
 	<div class="loading">
 		<div class="loading-icon">
-			<img src="bootstrap/image/loading1.gif"/>
+			<img src="bootstrap/image/loading1.gif" />
 			<h4>Đang chạy Hadoop MapReduce....</h4>
 		</div>
-					
+
 	</div>
 	<!-- Page Content -->
 	<div class="container">
 
 		<div class="jumbotron">
-			<h1>Hadoop MapReduce trên DBLP <img src="bootstrap/image/HadoopMapReduce.png"/></h1>
-			
+			<h1>
+				Hadoop MapReduce trên DBLP <img
+					src="bootstrap/image/HadoopMapReduce.png" />
+			</h1>
+
 		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-inline" role="form">
-					<form role="form" id="formHadoopID" name="formHadoop" action="index" method="POST">
+					<form role="form" id="formHadoopID" name="formHadoop"
+						action="index" method="POST">
 						<div class="col-md-3">
 							<label>Từ khóa:</label> <input class="inputForm" type="text"
 								name="search" id="search" placeholder="Nhập tên tác giả"">
@@ -114,9 +164,9 @@
 							<label>Tiêu chí tìm kiếm:</label>
 							<div class="form-control">
 								<label class="radio"> <input type="radio"
-									name="radTieuchitimkiem" id="rad1" value="0" checked="checked" >
+									name="radTieuchitimkiem" id="rad1" value="0" checked="checked">
 									Tương đối
-								</label> <label class="radio"> <input type="radio" 
+								</label> <label class="radio"> <input type="radio"
 									name="radTieuchitimkiem" id="rad2" value="1"> Tuyệt đối
 								</label>
 							</div>
@@ -137,24 +187,24 @@
 							</select>
 						</div>
 						<div class="col-md-2">
-							<button name="search" type="button" onclick="loadingHadoop()" class="btn btn-primary">Tìm kiếm</button>
+							<button name="search" type="button" onclick="loadingHadoop()"
+								class="btn btn-primary">Tìm kiếm</button>
 						</div>
 					</form>
+				</div>
 			</div>
 		</div>
-	</div>
 
 	</div>
 	<div style="margin: auto; width: 70%">
 		<hr>
-		 <%
+		<%
 			Object object = session.getAttribute("empty_list");
-			 String message;
+			String message;
 			if (object != null) {
-				 message = object.toString();
-			}
-			else{
-				message="";	
+				message = object.toString();
+			} else {
+				message = "";
 			}
 		%>
 		<%-- <c:redirect url="pageDetail.jsp" > PageDetail</c:redirect> --%>
@@ -168,13 +218,14 @@
 			</display:column> --%>
 
 			<display:column property="title" title="Tiêu đề"
-				href="${pageContext.request.contextPath}/pageDetail"  paramId="id"
+				href="${pageContext.request.contextPath}/pageDetail" paramId="id"
 				paramProperty="jsonObject" sortable="true" headerClass="sortable">
 				<%-- <stripes:hidden name="index"  value="${tableDBLP_rowNum -1}" /> --%>
 			</display:column>
 			<display:column property="author" title="Tác giả" sortable="true"
 				headerClass="sortable" />
-			<display:setProperty name="basic.msg.empty_list" value='<%=message %>' />
+			<display:setProperty name="basic.msg.empty_list"
+				value='<%=message%>' />
 		</display:table>
 		<%-- <%
 			}
@@ -187,10 +238,10 @@
 
 	<div class="container">
 		<!-- Footer -->
-		 <hr>
-      <footer>
-        <p>Copyright &copy; Hadoop - MapReduce Demo</p>
-      </footer>
+		<hr>
+		<footer>
+		<p>Copyright &copy; Hadoop - MapReduce Demo</p>
+		</footer>
 	</div>
 
 	<!-- /.container -->
