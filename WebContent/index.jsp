@@ -17,12 +17,18 @@
 
 <title>Hadoop MapReduce trên DBLP(Digital Bibliography & Library
 	Project)</title>
+<!-- Custom CSS -->
+<link href="bootstrap/css/style.css" rel="stylesheet">
 
 <!-- Bootstrap Core CSS -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- jQuery -->
+	<script src="bootstrap/js/jquery.js"></script>
 
-<!-- Custom CSS -->
-<link href="bootstrap/css/shop-item.css" rel="stylesheet">
+	<!-- Bootstrap Core JavaScript -->
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="bootstrap/js/main.js"></script>
+
 <style>
 .loading {
 	display: none;
@@ -93,15 +99,51 @@
 	width: 350px;
 	height: 110px;
 }
+
+.message-dialog {
+	position: fixed;
+	top: 20%;
+	width: 300px;
+	height: 200px;
+	z-index: 2;
+	background-color: #EEF6EE;
+	border-radius: 6px;
+	display: none;
+	text-align: center;
+	overflow: hidden;
+	border-width: 5px;
+	box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.15);
+}
+
+.dialog-title {
+	background-color: #C2E0D1;
+	font-weight: bold;
+	padding: 5px;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+}
+
+.dialog-content {
+	padding: 0 10px 20px 10px;	
+}
+
+.dialog-backdrop {
+	padding: 0 10px 20px 10px;
+	position: relative;
+    top: 70px;	
+}
 </style>
 <script type="text/javascript">
     
     function showAlert(message) {
     	var widthD=$('.messsage-dialog').width();
     	var pageWith=$(window).width();
-    	var x=(pageWith / 2 ) - ( widthD / 2);
-    	$('message-dialog').css({left: x +"px"});
-    	$('message-dialog').css({height:200+"px"});
+    	var x=(pageWith / 2 ) - ( widthD / 2) - 200;
+    	$('.message-dialog').css({"left": x +"px"});
+    	//$('.message-dialog').css({"height":150+"px"});
+    	$('.message-dialog .dialog-title label ').text("WARNING!");
+    	$('.message-dialog .dialog-content p').text(message);
+    	$('.message-dialog').fadeIn('fast');
     	
     }
     function loadingHadoop(){
@@ -116,30 +158,46 @@
     
     }
     
-    
     function validateForm(){
     	if($('#search').val()=="") { 
-    		alert("Từ khóa không để trống"); 
+    		//alert("Từ khóa không để trống"); 
+    		showAlert("Từ khóa không để trống");
     		$('#search').focus(); // Bắt đầu submit form
     		return false; 
     	}
     	else  {
     		return true;
 		}
-    	
     }
+    
+    function toggle(obj) {
+    	$(obj).toggle();
+	}
     
     </script>
 
 </head>
 
-<body>
+<body class="bodyClass">
+
 	<div class="loading">
 		<div class="loading-icon">
 			<img src="bootstrap/image/loading1.gif" />
 			<h4>Đang chạy Hadoop MapReduce....</h4>
 		</div>
+	</div>
 
+	<div class="message-dialog">
+		<div class="dialog-title">
+			<label style="color: red;" ></label>
+		</div>
+		<div class="dialog-content">
+			<p style="font-weight: bold;" ></p>
+		</div>
+		<div class="dialog-backdrop">
+			<button class="btn btn-primary"  onclick="toggle('.message-dialog')"> Ẩn</button>
+		</div>
+		
 	</div>
 	<!-- Page Content -->
 	<div class="container">
@@ -198,9 +256,9 @@
 	</div>
 	<div style="margin: auto; width: 70%">
 		<hr>
-		<%
+			<%
 			Object object = session.getAttribute("empty_list");
-			String message;
+			String message="";
 			if (object != null) {
 				message = object.toString();
 			} else {
@@ -224,8 +282,7 @@
 			</display:column>
 			<display:column property="author" title="Tác giả" sortable="true"
 				headerClass="sortable" />
-			<display:setProperty name="basic.msg.empty_list"
-				value='<%=message%>' />
+			<display:setProperty name="basic.msg.empty_list" value='<%=message%>' />
 		</display:table>
 		<%-- <%
 			}
@@ -246,12 +303,7 @@
 
 	<!-- /.container -->
 
-	<!-- jQuery -->
-	<script src="bootstrap/js/jquery.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="bootstrap/js/bootstrap.min.js"></script>
-	<script src="bootstrap/js/main.js"></script>
 
 </body>
 

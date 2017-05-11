@@ -47,6 +47,8 @@ public class index extends HttpServlet {
 		String type = request.getParameter("loaibaibao");
 		ArrayList<Page> arrayList = new ArrayList<>();
 		HttpSession sess = request.getSession(true);
+		
+		
 		try {
 			// Khi chạy trên Hadoop Cluster cần có file jar được export từ code
 			String jarPath = getServletContext().getRealPath("/");
@@ -55,11 +57,11 @@ public class index extends HttpServlet {
 				// System.out.println("Có dữ liệu");
 				sess.setAttribute("listPage", arrayList);
 			} else {
-				sess.setAttribute("empty_list", "Từ khóa " + search + " không tìm thấy dữ liệu");
+				sess.setAttribute("empty_list", "Không tìm thấy dữ liệu với từ khóa:"+search);
 			}
 
 		} catch (Exception e) {
-			sess.setAttribute("empty_list", "Quá trình chạy Hadoop MapReduce thất bại ");
+			sess.setAttribute("empty_list", "Quá trình chạy Hadoop MapReduce thất bại! ");
 			e.printStackTrace();
 		} finally {
 			// ẩn loading
